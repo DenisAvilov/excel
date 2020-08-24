@@ -1,0 +1,2 @@
+Add repository github
+Add .gitignore 
