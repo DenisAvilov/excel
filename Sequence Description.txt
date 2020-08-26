@@ -1,2 +1,35 @@
-Add repository github
-Add .gitignore 
+webpack (import/exports)
+    Babel
+    Scss
+    Eslint
+    2 Modes
+      - Dev
+        Dev Server, SourceMaps, Eslint, Not Minified JS & css
+        Minified Code
+Git 
+
+create nuw repository github
+.gitignore 
+git checkout -b "Description of the new branch" : create a nuw branch
+git push -u origin webpack 
+npm init 
+package.json { "private": true }
+npm install webpack webpack-cli --save-dev
+npm install --save-dev html-webpack-plugin
+npm install copy-webpack-plugin --save-dev      // используется для переноса favicon, указывая что и куда мы переносим 
+npm install --save-dev clean-webpack-plugin    
+npm install --save-dev mini-css-extract-plugin 
+
+//loader -> некие сущночти которые пропускают через себя различные разширения файлов, превращяя их в JS, в то с чем умеет работать webpack
+npm install sass-loader sass  --save-dev  //предпроцесор sass
+npm i -D css-loader    
+npm install --save-dev babel-loader @babel/core
+npm install @babel/preset-env --save-dev //самые последние фишки js поддерживаемые в babel
+
+// Определение в webpack.confiq в каком режиме сборки мы сейчас находимся process.env.Node_ENV, что бы быть полность
+//уверенными за эту переменную устанавливаем пакет в список зависимостей для разработки
+npm i -D cross-env  //этот пакет определяет на какой операционной системе мы работаем, подключаем в package.json "scripts": { "start": "cross-env NODE_ENV=development"}
+npm install -D @babel/polyfill
+
+npm i -D eslint eslint-loader babel-eslint
+npm install -D eslint-config-google
