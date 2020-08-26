@@ -33,3 +33,9 @@ npm install -D @babel/polyfill
 
 npm i -D eslint eslint-loader babel-eslint
 npm install -D eslint-config-google
+//
+Pull requests
+git checkout master
+
+// On branch css-loyout
+npm install normalize.css

@@ -45,6 +45,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.10.4"
+    "@babel/polyfill": "^7.10.4",
+    "normalize.css": "^8.0.1"
   }
 }
