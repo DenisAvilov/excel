@@ -36,6 +36,7 @@ npm install -D eslint-config-google
 //
 Pull requests
 git checkout master
+git pull
 
 // On branch css-loyout
 npm install normalize.css
