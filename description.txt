@@ -40,3 +40,9 @@ git pull
 
 // On branch css-loyout
 npm install normalize.css
+//синхронизация ветки
+git merge master 
+
+$.create // Создает NodeTag, ClassName 
+
+03_07
