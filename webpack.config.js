@@ -18,6 +18,7 @@ const jsLoaders = () => {
       // rules можно добовлять options, что бы не выносить в отдельный файл, как описано в док.
       options: {
         presets: ['@babel/preset-env'],
+        plugins: ['@babel/plugin-proposal-class-properties'],
       },
     },
   ]

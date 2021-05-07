@@ -11,7 +11,9 @@ module.exports = {
     'linebreak-style': 0,
     'comma-dangle': 'off',
     'require-jsdoc': 'off',
-    'max-len': 'off'
+    'max-len': 'off',
+    'operator-linebreak': 'off',
+    'arrow-parens': 'off'
   },
   'extends': ['eslint:recommended', 'google']
 }
