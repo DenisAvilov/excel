@@ -36,6 +36,20 @@ class Dom {
   get data() {
     return this.$el.dataset
   }
+  idCell(cell) {
+    if (cell) {
+      const id = this.idCell().split(':')
+      return {
+        row: +id[0],
+        col: +id[1]
+      }
+    }
+    return this.$el.dataset.rowandcell
+  }
+  focus() {
+    this.$el.focus()
+    return this
+  }
   css(styles) {
     Object.keys(styles)
         .forEach(e => this.$el.style[e] = styles[e])
@@ -51,6 +65,9 @@ class Dom {
   }
   find(el) {
     return $(this.$el.querySelector(el))
+  }
+  childElementCount() {
+    return this.$el.childElementCount
   }
   findAll(el) {
     return this.$el.querySelectorAll(el)

@@ -7,3 +7,12 @@ export const capitalize = (string) => {
   }
 }
 // sharAt(0) выбирает символ по порядку
+// Находим диапазон между двух произвольных чисел
+export const range = (start, end) => {
+  if (start > end) {
+    [start, end] = [end, start]
+  }
+  const count = end - start
+  return new Array(count + 1)
+      .fill().map( () => start++)
+}
