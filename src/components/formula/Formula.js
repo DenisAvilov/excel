@@ -1,11 +1,13 @@
 import {Component} from '../../core/Component';
 
+
 export class Formula extends Component {
-  constructor($root) {
+  constructor($root, options) {
     super($root, {
       name: 'Formula',
       // определяем слушателя
-      listener: ['input', 'click']
+      listener: ['keydown'],
+      ...options
     } )
   }
   static className = 'excel__formula'
@@ -15,12 +17,18 @@ export class Formula extends Component {
       <div class="input" contenteditable spellcheck="false"></div>
       `
   }
-  onInput(event) {
-    // console.log(this.$root, ' root event')
-    // console.log('Formula: onInput', event.target.textContent.trim())
+  init() {
+    super.init()
+    this.emiter.subscribe('table:forumlaContant',
+        (text$target) => this.$root.find('.input').textContent(text$target))
   }
-  onClick() {
-    // console.log(' click')
+  onKeydown(event) {
+    const text = event.target.textContent.trim()
+    this.emiter.distpath('formula:selection', text)
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      this.emiter.distpath('formula:focus')
+    }
   }
 }
 // #id.addEventListener('input', ()=>{})

@@ -5,13 +5,14 @@ export class Component extends DomListener {
     // передаем масив с событиями в DomListener
     super($root, opstions.listener)
     this.name = opstions.name || ''
+    this.emiter = opstions.emiter
     this.prepare()
   }
   toHTML() {
     return ''
   }
   prepare() {
-    // console.log('Component Prepare')
+    // console.log('Component Prepare - подготовить')
   }
   init() {
     this.initDomListener()

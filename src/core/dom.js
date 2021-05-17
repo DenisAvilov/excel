@@ -23,6 +23,12 @@ class Dom {
     }
     return this
   }
+  textContent(text) {
+    if (typeof text === 'string') {
+      return this.$el.innerHTML = text
+    }
+    return this.$el.innerText
+  }
   on(eventTarget, callBack) {
     // console.log(eventTarget)
     return this.$el.addEventListener(eventTarget, callBack)

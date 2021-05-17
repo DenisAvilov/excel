@@ -5,10 +5,11 @@ import {resize, eventCell, matrixCell, matrixGroup} from './table.function';
 import {tableResize} from './table.resize';
 import {$} from './../../core/dom'
 export class Table extends Component {
-  constructor($root) {
+  constructor($root, options) {
     super($root, {
       name: 'Table',
-      listener: ['mousedown', 'keydown']
+      listener: ['mousedown', 'keydown', 'input'],
+      ...options
     })
   }
   static className = 'excel__table'
@@ -24,6 +25,8 @@ export class Table extends Component {
   init() {
     super.init()
     this.selected.select(this.$root.find('[data-rowAndCell="0:0"]'))
+    this.emiter.subscribe('formula:selection', (text) => this.selected.startGroup.$el.innerText = `${text}`)
+    this.emiter.subscribe('formula:focus', () => this.selected.startGroup.$el.focus())
   }
   onMousedown(event) {
     const $target = $(event.target)
@@ -31,6 +34,7 @@ export class Table extends Component {
       tableResize(this.$root, event)
     }
     if (eventCell(event)) {
+      this.emiter.distpath('table:forumlaContant', $target.textContent())
       if (event.shiftKey) {
         event.preventDefault()
         this.selected.selectGroup(
@@ -52,8 +56,13 @@ export class Table extends Component {
     if (keys.includes(event.key) && !event.shiftKey ) {
       event.preventDefault()
       const newCell = this.$root.find( matrixCell(event.key, col, row, maxcol, maxrow))
+      this.emiter.distpath('table:forumlaContant', newCell.textContent())
       this.selected.select(newCell)
     }
+  }
+  onInput(event) {
+    const $target = $(event.target).textContent()
+    this.emiter.distpath('table:forumlaContant', $target)
   }
 }
 
