@@ -1,6 +1,7 @@
 export class Observer {
   constructor() {
     this.listeners = {}
+    this.unsubscribe = {}
   }
   // distpath, emit, fire, trigger (event: string)
   // ('table:select', {})

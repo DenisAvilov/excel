@@ -23,25 +23,33 @@ class Dom {
     }
     return this
   }
+
   textContent(text) {
     if (typeof text === 'string') {
-      return this.$el.innerHTML = text
+      return this.$el.textContent = text
     }
-    return this.$el.innerText
+    if (this.$el.tagName.toLowerCase() === 'input') {
+      return this.$el.value.trim()
+    }
+    return this.$el.textContent.trim()
   }
+
   on(eventTarget, callBack) {
     // console.log(eventTarget)
     return this.$el.addEventListener(eventTarget, callBack)
   }
+
   off(eventTarget, callBack) {
     return this.$el.removeEventListener(eventTarget, callBack)
   }
+
   closest(el) {
     return $(this.$el.closest(el))
   }
   get data() {
     return this.$el.dataset
   }
+
   idCell(cell) {
     if (cell) {
       const id = this.idCell().split(':')
@@ -52,29 +60,36 @@ class Dom {
     }
     return this.$el.dataset.rowandcell
   }
+
   focus() {
     this.$el.focus()
     return this
   }
+
   css(styles) {
     Object.keys(styles)
         .forEach(e => this.$el.style[e] = styles[e])
   }
+
   classAdd(el) {
     return this.$el.classList.add(el)
   }
+
   classDel(el) {
     return this.$el.classList.remove(el)
   }
   getClientRect() {
     return this.$el.getBoundingClientRect()
   }
+
   find(el) {
     return $(this.$el.querySelector(el))
   }
+
   childElementCount() {
     return this.$el.childElementCount
   }
+
   findAll(el) {
     return this.$el.querySelectorAll(el)
   }

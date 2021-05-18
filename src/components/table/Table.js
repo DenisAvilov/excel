@@ -25,16 +25,21 @@ export class Table extends Component {
   init() {
     super.init()
     this.selected.select(this.$root.find('[data-rowAndCell="0:0"]'))
-    this.emiter.subscribe('formula:selection', (text) => this.selected.startGroup.$el.innerText = `${text}`)
-    this.emiter.subscribe('formula:focus', () => this.selected.startGroup.$el.focus())
+    this.$on('formula:input', (text) => this.selected.startGroup.$el.innerText = `${text}`)
+    this.$on('formula:focus', () => this.selected.startGroup.$el.focus())
   }
+
+  selectCell(cell) {
+    this.selected.select(cell)
+    this.$distpath('table:input', cell.textContent())
+  }
+
   onMousedown(event) {
     const $target = $(event.target)
     if (resize(event)) {
       tableResize(this.$root, event)
     }
     if (eventCell(event)) {
-      this.emiter.distpath('table:forumlaContant', $target.textContent())
       if (event.shiftKey) {
         event.preventDefault()
         this.selected.selectGroup(
@@ -42,10 +47,12 @@ export class Table extends Component {
                 .map( (el) => this.$root.find(`[data-rowAndCell="${el}"]`))
         )
       } else {
-        this.selected.select(this.$root.find(`[data-rowAndCell="${eventCell(event)}"]`))
+        const cell = this.$root.find(`[data-rowAndCell="${eventCell(event)}"]`)
+        this.selectCell(cell)
       }
     }
   }
+
   onKeydown(event) {
     const $target = $(event.target)
     const keys = ['Enter', 'Tab', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']
@@ -55,14 +62,12 @@ export class Table extends Component {
     const row = $target.idCell(true).row
     if (keys.includes(event.key) && !event.shiftKey ) {
       event.preventDefault()
-      const newCell = this.$root.find( matrixCell(event.key, col, row, maxcol, maxrow))
-      this.emiter.distpath('table:forumlaContant', newCell.textContent())
-      this.selected.select(newCell)
+      this.selectCell(this.$root.find( matrixCell(event.key, col, row, maxcol, maxrow)))
     }
   }
+
   onInput(event) {
-    const $target = $(event.target).textContent()
-    this.emiter.distpath('table:forumlaContant', $target)
+    this.$distpath('table:input', $(event.target).textContent())
   }
 }
 

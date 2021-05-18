@@ -26,5 +26,9 @@ export class Exsel {
     // после того как отрисовали HTML и заапендили Component
     this.components.forEach(component => component.init())
   }
+  destroy() {
+    // Удаляем слушателей и компонету
+    this.components.forEach(component => component.destroy())
+  }
 }
 // треюа срати своею сракою
