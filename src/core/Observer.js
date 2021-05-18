@@ -1,12 +1,12 @@
 export class Observer {
   constructor() {
     this.listeners = {}
+    this.unsubscribe = {}
   }
-  
   // distpath, emit, fire, trigger (event: string)
   // ('table:select', {})
   distpath(event, ...args) {
-    if (!Array.isArray(this.listeners(event))) {
+    if (!Array.isArray(this.listeners[event])) {
       return false
     }
     this.listeners[event].forEach(el => {

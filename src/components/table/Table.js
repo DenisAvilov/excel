@@ -5,10 +5,11 @@ import {resize, eventCell, matrixCell, matrixGroup} from './table.function';
 import {tableResize} from './table.resize';
 import {$} from './../../core/dom'
 export class Table extends Component {
-  constructor($root) {
+  constructor($root, options) {
     super($root, {
       name: 'Table',
-      listener: ['mousedown', 'keydown']
+      listener: ['mousedown', 'keydown', 'input'],
+      ...options
     })
   }
   static className = 'excel__table'
@@ -24,7 +25,15 @@ export class Table extends Component {
   init() {
     super.init()
     this.selected.select(this.$root.find('[data-rowAndCell="0:0"]'))
+    this.$on('formula:input', (text) => this.selected.startGroup.$el.innerText = `${text}`)
+    this.$on('formula:focus', () => this.selected.startGroup.$el.focus())
   }
+
+  selectCell(cell) {
+    this.selected.select(cell)
+    this.$distpath('table:input', cell.textContent())
+  }
+
   onMousedown(event) {
     const $target = $(event.target)
     if (resize(event)) {
@@ -38,10 +47,11 @@ export class Table extends Component {
                 .map( (el) => this.$root.find(`[data-rowAndCell="${el}"]`))
         )
       } else {
-        this.selected.select(this.$root.find(`[data-rowAndCell="${eventCell(event)}"]`))
+        this.selectCell(this.$root.find(`[data-rowAndCell="${eventCell(event)}"]`))
       }
     }
   }
+
   onKeydown(event) {
     const $target = $(event.target)
     const keys = ['Enter', 'Tab', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']
@@ -51,9 +61,12 @@ export class Table extends Component {
     const row = $target.idCell(true).row
     if (keys.includes(event.key) && !event.shiftKey ) {
       event.preventDefault()
-      const newCell = this.$root.find( matrixCell(event.key, col, row, maxcol, maxrow))
-      this.selected.select(newCell)
+      this.selectCell(this.$root.find( matrixCell(event.key, col, row, maxcol, maxrow)))
     }
+  }
+
+  onInput(event) {
+    this.$distpath('table:input', $(event.target).textContent())
   }
 }
 
