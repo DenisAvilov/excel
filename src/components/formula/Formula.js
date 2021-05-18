@@ -34,4 +34,4 @@ export class Formula extends Component {
     this.$distpath('formula:input', $(event.target).textContent())
   }
 }
-// #id.addEventListener('input', ()=>{})
+

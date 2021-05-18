@@ -47,8 +47,7 @@ export class Table extends Component {
                 .map( (el) => this.$root.find(`[data-rowAndCell="${el}"]`))
         )
       } else {
-        const cell = this.$root.find(`[data-rowAndCell="${eventCell(event)}"]`)
-        this.selectCell(cell)
+        this.selectCell(this.$root.find(`[data-rowAndCell="${eventCell(event)}"]`))
       }
     }
   }
