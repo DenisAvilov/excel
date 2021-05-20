@@ -27,6 +27,7 @@ export class Table extends Component {
     this.selected.select(this.$root.find('[data-rowAndCell="0:0"]'))
     this.$on('formula:input', (text) => this.selected.startGroup.$el.innerText = `${text}`)
     this.$on('formula:focus', () => this.selected.startGroup.$el.focus())
+    this.subscribe((fn) => console.log('Table fn', fn))
   }
 
   selectCell(cell) {
@@ -40,6 +41,7 @@ export class Table extends Component {
       tableResize(this.$root, event)
     }
     if (eventCell(event)) {
+      this.distpath({type: 'Table'})
       if (event.shiftKey) {
         event.preventDefault()
         this.selected.selectGroup(
