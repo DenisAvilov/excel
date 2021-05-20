@@ -6,7 +6,6 @@ export class Formula extends Component {
   constructor($root, options) {
     super($root, {
       name: 'Formula',
-      // определяем слушателя
       listener: ['keydown', 'input'],
       ...options
     } )
@@ -23,6 +22,7 @@ export class Formula extends Component {
     const $formula = this.$root.find('#formula')
     this.$on('table:input',
         (text$target) => $formula.textContent(text$target))
+    this.subscribe((fn) => console.log('this is Formula fn', fn))
   }
   onKeydown(event) {
     if (event.key === 'Enter') {
@@ -32,6 +32,7 @@ export class Formula extends Component {
   }
   onInput(event) {
     this.$distpath('formula:input', $(event.target).textContent())
+    this.distpath({type: 'Formula'})
   }
 }
 

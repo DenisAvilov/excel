@@ -5,7 +5,7 @@ export class Observer {
   }
   // distpath, emit, fire, trigger (event: string)
   // ('table:select', {})
-  distpath(event, ...args) {
+  fire(event, ...args) {
     if (!Array.isArray(this.listeners[event])) {
       return false
     }

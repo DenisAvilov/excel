@@ -8,6 +8,8 @@ export class Component extends DomListener {
     this.emiter = opstions.emiter
     this.unsubscribers = []
     this.prepare()
+    this.store = opstions.store
+    this.unsubscribs = []
   }
 
   // Возвращяем шаблон, отрисовка компоненты
@@ -19,7 +21,7 @@ export class Component extends DomListener {
   // Уведомляем слушателей про событие event.
   // Pattern Fasad
   $distpath(event, ...args) {
-    this.emiter.distpath(event, ...args)
+    this.emiter.fire(event, ...args)
   }
 
   // Подписываемся на изменения события event
@@ -28,6 +30,15 @@ export class Component extends DomListener {
     // this.emiter.subscribe(event, fn)
     const unsb = this.emiter.subscribe(event, fn)
     this.unsubscribers.push(unsb)
+  }
+  // передаем action type -> Reducer для получения Store
+  distpath(action) {
+    this.store.distpath(action)
+  }
+  // передаем функцию в масив слушателей
+  subscribe(fn) {
+    const unsb = this.store.subscribe(fn)
+    this.unsubscribs.push(unsb)
   }
 
   // Подготовка компонета до init
@@ -46,6 +57,7 @@ export class Component extends DomListener {
   destroy() {
     this.removeListener()
     this.unsubscribers.forEach(fn => fn())
+    this.unsubscribs.forEach(fn => fn())
   }
 }
 

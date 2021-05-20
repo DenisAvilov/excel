@@ -6,10 +6,12 @@ export class Exsel {
     this.components = opstions.components || []
     this.name = opstions.name || ''
     this.emiter = new Observer()
+    this.store = opstions.store
   }
   goRen() {
     const options = {
-      emiter: this.emiter
+      emiter: this.emiter,
+      store: this.store
     }
     const $excel = $.create('div', 'excel')
     this.components = this.components.map( Component => {
@@ -23,12 +25,10 @@ export class Exsel {
   }
   render() {
     this.$el.appendDom(this.goRen())
-    // после того как отрисовали HTML и заапендили Component
     this.components.forEach(component => component.init())
   }
   destroy() {
-    // Удаляем слушателей и компонету
     this.components.forEach(component => component.destroy())
   }
 }
-// треюа срати своею сракою
+// треба срати своею сракою
